@@ -28,7 +28,7 @@ fn download_prebuilt(
 
     let file_name = format!("webrtc.{}_{}.{}", target_os, target_arch, file_ext);
     let file_url = format!(
-        "https://github.com/webrtc-sdk/webrtc-build/releases/download/{}/{}",
+        "https://github.com/openmina/webrtc-build/releases/download/{}/{}",
         WEBRTC_TAG, file_name
     );
     let file_path = out_path.join(&file_name);
@@ -320,6 +320,12 @@ fn main() {
                 .define("WEBRTC_LINUX", None)
                 .define("WEBRTC_POSIX", None)
                 .define("WEBRTC_ANDROID", None);
+        }
+        "linux" => {
+            builder
+                .flag("-std=c++17")
+                .define("WEBRTC_POSIX", None)
+                .define("WEBRTC_LINUX", None);
         }
         _ => {
             panic!("Unsupported target, {}", target_os);
